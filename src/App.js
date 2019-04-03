@@ -7,25 +7,31 @@ import Archive from './pages/archive.js'
 import Support from './pages/support.js'
 
 import Post from './components/Post.js'
+import AudioPlayer from './components/AudioPlayer.js'
 
 import './App.css'
+import { ARCHIVE_URL, ITUNES, RSS, RSS_ICON, SPOTIFY } from './Constants'
+
+// badges
+import { ReactComponent as SpotifyBadge } from './assets/spotify-podcast-badge-wht-blk-165x40.svg'
+import { ReactComponent as AppleBadge } from './assets/US_UK_Apple_Podcasts_Listen_Badge_RGB.svg'
 
 export default class App extends Component {
 
   constructor(props) {
     super(props)
-    this.state = { archive: [], latest: {} }
+    this.state = { archive: [] }
   }
 
   async componentDidMount() {
-    const archive = await (await fetch('https://s3.amazonaws.com/metacognition/archive.json')).json()
-    this.setState({ archive: archive, latest: archive[0] })
+    const archive = await (await fetch(ARCHIVE_URL)).json()
+    this.setState({ archive: archive })
   }
 
   render() {
 
     return (
-      <div className="root">
+      <div>
         <nav>
           <div className="logo-home">
             <Link to="/">
@@ -39,7 +45,7 @@ export default class App extends Component {
           </div>
         </nav>
         <Router>
-          <Home path="/" latest={this.state.latest}/>
+          <Home path="/" archive={this.state.archive}/>
           <About path="/about"/>
           <Archive path="/archive" archive={this.state.archive}/>
           <Post path='/archive/:postId' archive={this.state.archive}/>
@@ -47,11 +53,16 @@ export default class App extends Component {
         </Router>
         <div className="footer">
           <p className="copyright">© Metacognition Podcast</p>
-          <a href="https://pcr.apple.com/id1450133749" className="footer-link">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Rss-feed.svg/600px-Rss-feed.svg.png"
-              width="100%"
-              alt="rss feed link"/>
-          </a>
+          <div className="footer-links">
+            <a href={ITUNES} className="footer-link"><AppleBadge/></a>
+            <a href={SPOTIFY} className="footer-link"><SpotifyBadge/></a>
+            <a href={RSS} className="footer-link">
+              <img src={RSS_ICON} width="55px" alt="RSS feed"/>
+            </a>
+          </div>
+        </div>
+        <div style={{ position: 'fixed', bottom: '0' }}>
+          <AudioPlayer src='http://jplayer.org/audio/m4a/Miaow-07-Bubble.m4a' title='ok'/>
         </div>
       </div>
     )

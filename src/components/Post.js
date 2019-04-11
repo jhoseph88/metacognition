@@ -8,7 +8,7 @@ export default function Post(props) {
   return (
     <div className="content">
       <Link to="/archive">{'<'} Back</Link>
-      <br />
+      <br/>
       <h3>{props.archive[props.postId].title}</h3>
       <p>{props.archive[props.postId].description}</p>
       <img src={props.archive[props.postId].img}

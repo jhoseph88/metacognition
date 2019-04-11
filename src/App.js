@@ -1,13 +1,16 @@
 import React, { Component } from 'react'
 import { Link, Router } from '@reach/router'
 
+// Font Awesome dependencies
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faPlayCircle, faPauseCircle } from '@fortawesome/free-solid-svg-icons'
+
 import Home from './pages/index.js'
 import About from './pages/about.js'
 import Archive from './pages/archive.js'
 import Support from './pages/support.js'
 
 import Post from './components/Post.js'
-import AudioPlayer from './components/AudioPlayer.js'
 
 import './App.css'
 import { ARCHIVE_URL, ITUNES, RSS, RSS_ICON, SPOTIFY } from './Constants'
@@ -20,12 +23,22 @@ export default class App extends Component {
 
   constructor(props) {
     super(props)
-    this.state = { archive: [] }
+    this.state = { archive: [], width: 0, height: 0 }
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
+    // add Font Awesome icons to library
+    library.add(faPlayCircle)
+    library.add(faPauseCircle)
   }
 
   async componentDidMount() {
+    this.updateWindowDimensions()
+    window.addEventListener('resize', this.updateWindowDimensions)
     const archive = await (await fetch(ARCHIVE_URL)).json()
     this.setState({ archive: archive })
+  }
+
+  updateWindowDimensions() {
+    this.setState({ width: window.innerWidth, height: window.innerHeight })
   }
 
   render() {
@@ -61,9 +74,10 @@ export default class App extends Component {
             </a>
           </div>
         </div>
-        <div style={{ position: 'fixed', bottom: '0' }}>
-          <AudioPlayer src='http://jplayer.org/audio/m4a/Miaow-07-Bubble.m4a' title='ok'/>
-        </div>
+        <audio className="sticky-player"
+          style={{ position: 'fixed', bottom: '0', width: this.state.width }}
+          src="http://jplayer.org/audio/m4a/Miaow-07-Bubble.m4a"
+          controls/>
       </div>
     )
   }

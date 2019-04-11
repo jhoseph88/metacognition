@@ -115,3 +115,26 @@ button {
 .card-body {
   padding: 10px;
 }
+
+.clickable-img {
+  position: relative;
+}
+
+.clickable-img:hover {
+  -webkit-filter: brightness(40%);
+}
+
+.play-button {
+  display: none;
+}
+
+.clickable-img:hover .play-button {
+  font-size: 100px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  display: block;
+  cursor: pointer;
+}

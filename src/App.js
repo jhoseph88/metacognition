@@ -63,7 +63,7 @@ export default class App extends Component {
   render() {
 
     return (
-      <div>
+      <div style={{ display: 'flex', minHeight: '100vh', flexDirection: 'column' }}>
         <nav>
           <div className="logo-home">
             <Link to="/">
@@ -76,7 +76,7 @@ export default class App extends Component {
             <Link to="/support">Support</Link>
           </div>
         </nav>
-        <Router>
+        <Router className="router">
           <Home path="/"
             archive={this.state.archive}
             playAudio={this.play}

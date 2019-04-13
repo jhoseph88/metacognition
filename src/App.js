@@ -86,7 +86,13 @@ export default class App extends Component {
             playingSrc={this.state.src}/>
           <About path="/about"/>
           <Archive path="/archive" archive={this.state.archive}/>
-          <Post path='/archive/:postId' archive={this.state.archive}/>
+          <Post path='/archive/:postId'
+            archive={this.state.archive}
+            playAudio={this.play}
+            pauseAudio={this.pause}
+            audioPlaying={this.state.stickyPlaying}
+            setSrc={this.setSrc}
+            playingSrc={this.state.src}/>
           <Support path='/support'/>
         </Router>
         <div className="footer">

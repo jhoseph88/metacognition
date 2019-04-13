@@ -23,8 +23,10 @@ export default class App extends Component {
 
   constructor(props) {
     super(props)
-    this.state = { archive: [], width: 0, height: 0 }
+    this.state = { archive: [], width: 0, height: 0, stickyPlaying: false }
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
+    this.play = this.play.bind(this)
+    this.pause = this.pause.bind(this)
     // add Font Awesome icons to library
     library.add(faPlayCircle)
     library.add(faPauseCircle)
@@ -34,11 +36,21 @@ export default class App extends Component {
     this.updateWindowDimensions()
     window.addEventListener('resize', this.updateWindowDimensions)
     const archive = await (await fetch(ARCHIVE_URL)).json()
-    this.setState({ archive: archive })
+    this.setState({ archive: archive,  })
   }
 
   updateWindowDimensions() {
     this.setState({ width: window.innerWidth, height: window.innerHeight })
+  }
+
+  play() {
+    document.getElementById("sticky-player").play()
+    this.setState({ stickyPlaying: true })
+  }
+
+  pause() {
+    document.getElementById("sticky-player").pause()
+    this.setState({ stickyPlaying: false })
   }
 
   render() {
@@ -58,7 +70,11 @@ export default class App extends Component {
           </div>
         </nav>
         <Router>
-          <Home path="/" archive={this.state.archive}/>
+          <Home path="/"
+            archive={this.state.archive}
+            playAudio={this.play}
+            pauseAudio={this.pause}
+            audioPlaying={this.state.stickyPlaying}/>
           <About path="/about"/>
           <Archive path="/archive" archive={this.state.archive}/>
           <Post path='/archive/:postId' archive={this.state.archive}/>
@@ -74,10 +90,10 @@ export default class App extends Component {
             </a>
           </div>
         </div>
-        <audio className="sticky-player"
+        <audio id="sticky-player"
           style={{ position: 'fixed', bottom: '0', width: this.state.width }}
           src="http://jplayer.org/audio/m4a/Miaow-07-Bubble.m4a"
-          controls/>
+          controls onPlay={this.play} onPause={this.pause}/>
       </div>
     )
   }

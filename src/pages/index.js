@@ -9,8 +9,14 @@ export default class Home extends React.Component {
       <div>
         <h1 style={{ marginLeft: '25px' }}>Latest episodes:</h1>
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-          <Card post={this.props.archive[0]}/>
-          <Card post={this.props.archive[1]}/>
+          <Card post={this.props.archive[0]}
+            playAudio={this.props.playAudio}
+            pauseAudio={this.props.pauseAudio}
+            audioPlaying={this.props.audioPlaying}/>
+          <Card post={this.props.archive[1]}
+            playAudio={this.props.playAudio}
+            pauseAudio={this.props.pauseAudio}
+            audioPlaying={this.props.audioPlaying}/>
         </div>
       </div>
     ) : <Loader/>

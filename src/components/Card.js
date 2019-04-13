@@ -12,9 +12,23 @@ export default function Card(props) {
       <div className="clickable-img">
         <img src={props.post.img} alt="latest podcast" width="100%"/>
         <FontAwesomeIcon
-          icon={props.audioPlaying ? "pause-circle": "play-circle"}
+          icon={props.audioPlaying && props.playingSrc === props.post.src ?  "pause-circle": "play-circle"}
           className="play-button"
-          onClick={props.audioPlaying ? props.pauseAudio: props.playAudio}/>
+          onClick={() => {
+            console.log("audioPlaying: " + props.audioPlaying)
+            console.log("src: " + props.post.src)
+            if (props.audioPlaying) {
+              if (props.playingSrc === props.post.src) {
+                props.pauseAudio()
+              } else {
+                props.setSrc(props.post.src)
+              }
+            } else {
+              props.setSrc(props.post.src)
+              props.playAudio()
+            }
+
+          }}/>
       </div>
       <div className="title-bottom">
         <p className="card-body">

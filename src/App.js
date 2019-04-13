@@ -23,10 +23,11 @@ export default class App extends Component {
 
   constructor(props) {
     super(props)
-    this.state = { archive: [], width: 0, height: 0, stickyPlaying: false }
+    this.state = { archive: [], width: 0, height: 0, stickyPlaying: false, src: '' }
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
     this.play = this.play.bind(this)
     this.pause = this.pause.bind(this)
+    this.setSrc = this.setSrc.bind(this)
     // add Font Awesome icons to library
     library.add(faPlayCircle)
     library.add(faPauseCircle)
@@ -36,7 +37,9 @@ export default class App extends Component {
     this.updateWindowDimensions()
     window.addEventListener('resize', this.updateWindowDimensions)
     const archive = await (await fetch(ARCHIVE_URL)).json()
-    this.setState({ archive: archive,  })
+    this.setState({ archive: archive, src: archive[0].src })
+    let stickyPlayer = document.getElementById("sticky-player")
+    stickyPlayer.oncanplay = stickyPlayer.play
   }
 
   updateWindowDimensions() {
@@ -51,6 +54,10 @@ export default class App extends Component {
   pause() {
     document.getElementById("sticky-player").pause()
     this.setState({ stickyPlaying: false })
+  }
+
+  setSrc(url) {
+    this.setState({ src: url })
   }
 
   render() {
@@ -74,7 +81,9 @@ export default class App extends Component {
             archive={this.state.archive}
             playAudio={this.play}
             pauseAudio={this.pause}
-            audioPlaying={this.state.stickyPlaying}/>
+            audioPlaying={this.state.stickyPlaying}
+            setSrc={this.setSrc}
+            playingSrc={this.state.src}/>
           <About path="/about"/>
           <Archive path="/archive" archive={this.state.archive}/>
           <Post path='/archive/:postId' archive={this.state.archive}/>
@@ -86,14 +95,16 @@ export default class App extends Component {
             <a href={ITUNES} className="footer-link"><AppleBadge/></a>
             <a href={SPOTIFY} className="footer-link"><SpotifyBadge/></a>
             <a href={RSS} className="footer-link">
-              <img src={RSS_ICON} width="55px" alt="RSS feed"/>
+              <img src={RSS_ICON} width="55px" height="55px" alt="RSS feed"/>
             </a>
           </div>
         </div>
         <audio id="sticky-player"
           style={{ position: 'fixed', bottom: '0', width: this.state.width }}
-          src="http://jplayer.org/audio/m4a/Miaow-07-Bubble.m4a"
-          controls onPlay={this.play} onPause={this.pause}/>
+          src={this.state.src}
+          onPlay={this.play}
+          onPause={this.pause}
+          controls/>
       </div>
     )
   }

@@ -6,7 +6,6 @@ import Loader from '../components/Loader.js'
 import '../App.css'
 
 export default function Post(props) {
-
   return props.archive.length > 0 ? (
     <div className="content">
       <Link to="/archive">{'<'} Back</Link>

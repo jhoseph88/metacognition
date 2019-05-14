@@ -22,6 +22,8 @@ export default function Card(props) {
         <p className="card-body">
           {props.post.description.substring(0, 250) + '...'}
         </p>
+        <p className="attribution"
+          dangerouslySetInnerHTML={{__html: props.attribution}}/>
       </div>
     </div>
   )

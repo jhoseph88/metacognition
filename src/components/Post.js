@@ -18,6 +18,8 @@ export default function Post(props) {
         pauseAudio={props.pauseAudio}
         playingSrc={props.playingSrc}
         setSrc={props.setSrc} />
+      <p className="attribution"
+        dangerouslySetInnerHTML={{__html: props.archive[props.postId]["attribution"]}}/>
     </div>
   ) : <Loader/>
 }

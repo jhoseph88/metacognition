@@ -110,6 +110,12 @@ button {
   padding: 10px;
 }
 
+.attribution {
+  padding: 10px;
+  font-size:12px;
+  text-align: center;
+}
+
 .clickable-img {
   position: relative;
 }

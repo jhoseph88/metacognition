@@ -14,14 +14,24 @@ export default function Home(props) {
           pauseAudio={props.pauseAudio}
           audioPlaying={props.audioPlaying}
           setSrc={props.setSrc}
-          playingSrc={props.playingSrc}/>
+          playingSrc={props.playingSrc}
+          attribution={props.archive[0]["attribution"]}/>
         <Card post={props.archive[1]}
           postId={1}
           playAudio={props.playAudio}
           pauseAudio={props.pauseAudio}
           audioPlaying={props.audioPlaying}
           setSrc={props.setSrc}
-          playingSrc={props.playingSrc}/>
+          playingSrc={props.playingSrc}
+          attribution={props.archive[1]["attribution"]}/>
+        <Card post={props.archive[2]}
+          postId={2}
+          playAudio={props.playAudio}
+          pauseAudio={props.pauseAudio}
+          audioPlaying={props.audioPlaying}
+          setSrc={props.setSrc}
+          playingSrc={props.playingSrc}
+          attribution={props.archive[2]["attribution"]}/>
       </div>
     </div>
   ) : <Loader/>

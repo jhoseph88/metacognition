@@ -3,6 +3,7 @@ import { Link } from '@reach/router'
 
 import CoverArt from './CoverArt.js'
 import Loader from '../components/Loader.js'
+import { ATTRIBUTION_KEY } from '../Constants.js'
 import '../App.css'
 
 export default function Post(props) {
@@ -19,7 +20,9 @@ export default function Post(props) {
         playingSrc={props.playingSrc}
         setSrc={props.setSrc} />
       <p className="attribution"
-        dangerouslySetInnerHTML={{__html: props.archive[props.postId]["attribution"]}}/>
+        dangerouslySetInnerHTML={
+          {__html: props.archive[props.postId][ATTRIBUTION_KEY]}
+        }/>
     </div>
   ) : <Loader/>
 }

@@ -1,29 +1,39 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import '../App.css'
 
-export default function CoverArt(props) {
-  return (
-    <div className="clickable-img">
-      <img src={props.post.img} alt="latest podcast" width="100%"/>
-      <FontAwesomeIcon
-        icon={props.audioPlaying && props.playingSrc === props.post.src ?  "pause-circle": "play-circle"}
-        className="play-button"
-        onClick={() => {
-          console.log("audioPlaying: " + props.audioPlaying)
-          console.log("src: " + props.post.src)
-          if (props.audioPlaying) {
-            if (props.playingSrc === props.post.src) {
-              props.pauseAudio()
-            } else {
-              props.setSrc(props.post.src)
-            }
-          } else {
-            props.setSrc(props.post.src)
-            props.playAudio()
-          }
-        }}/>
-    </div>
-  )
+export default class CoverArt extends Component {
+
+  audioPlaying = () => {
+    if (this.props.audioPlaying &&
+        this.props.playingSrc === this.props.post.src) {
+      return "pause-circle"
+    } else {
+      return "play-circle"
+    }
+  }
+
+  handleClick = () => {
+    if (this.props.audioPlaying) {
+      if (this.props.playingSrc === this.props.post.src) {
+        this.props.pauseAudio()
+      } else {
+        this.props.setSrc(this.props.post.src)
+      }
+    } else {
+      this.props.setSrc(this.props.post.src)
+      this.props.playAudio()
+    }
+  }
+
+  render() {
+    return (
+      <div className="clickable-img">
+        <img src={this.props.post.img} alt="latest podcast" width="100%"/>
+        <FontAwesomeIcon icon={this.audioPlaying()} className="play-button"
+          onClick={this.handleClick}/>
+      </div>
+    )
+  }
 }

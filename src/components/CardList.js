@@ -12,7 +12,8 @@ export default function CardList(props) {
       pauseAudio={props.pauseAudio}
       setSrc={props.setSrc}
       playingSrc={props.playingSrc}
-      attribution={props.archive[index][ATTRIBUTION_KEY]}/>)
+      attribution={props.archive[index][ATTRIBUTION_KEY]}
+      key={index}/>)
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
       {cards}

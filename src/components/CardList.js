@@ -7,9 +7,9 @@ export default function CardList(props) {
   const cards = props.archive.slice(0, NUM_RECENTS).map((item, index) =>
     <Card post={props.archive[index]}
       postId={index}
+      audioPlaying={props.audioPlaying}
       playAudio={props.playAudio}
       pauseAudio={props.pauseAudio}
-      audioPlaying={props.audioPlaying}
       setSrc={props.setSrc}
       playingSrc={props.playingSrc}
       attribution={props.archive[index][ATTRIBUTION_KEY]}/>)

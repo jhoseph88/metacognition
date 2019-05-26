@@ -16,18 +16,19 @@ import './App.css'
 import { ARCHIVE_URL, ITUNES, RSS, RSS_ICON, SPOTIFY } from './Constants'
 
 // badges
-import { ReactComponent as SpotifyBadge } from './assets/spotify-podcast-badge-wht-blk-165x40.svg'
-import { ReactComponent as AppleBadge } from './assets/US_UK_Apple_Podcasts_Listen_Badge_RGB.svg'
+import {
+  ReactComponent as SpotifyBadge
+} from './assets/spotify-podcast-badge-wht-blk-165x40.svg'
+import {
+  ReactComponent as AppleBadge
+} from './assets/US_UK_Apple_Podcasts_Listen_Badge_RGB.svg'
 
 export default class App extends Component {
 
   constructor(props) {
     super(props)
-    this.state = { archive: [], width: 0, height: 0, stickyPlaying: false, src: '' }
-    this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
-    this.play = this.play.bind(this)
-    this.pause = this.pause.bind(this)
-    this.setSrc = this.setSrc.bind(this)
+    this.state = { archive: [], width: 0, height: 0, stickyPlaying: false }
+    this.stickyPlayer = {}
     // add Font Awesome icons to library
     library.add(faPlayCircle)
     library.add(faPauseCircle)
@@ -38,30 +39,33 @@ export default class App extends Component {
     window.addEventListener('resize', this.updateWindowDimensions)
     const archive = await (await fetch(ARCHIVE_URL)).json()
     this.setState({ archive: archive, src: archive[0].src })
-    let stickyPlayer = document.getElementById("sticky-player")
-    stickyPlayer.oncanplay = stickyPlayer.play
+    this.stickyPlayer = document.getElementById("sticky-player")
+    this.stickyPlayer.oncanplay = this.stickyPlayer.play
   }
 
-  updateWindowDimensions() {
+  updateWindowDimensions = () => {
     this.setState({ width: window.innerWidth, height: window.innerHeight })
   }
 
-  play() {
-    document.getElementById("sticky-player").play()
+  play = async () => {
+    await this.stickyPlayer.play()
     this.setState({ stickyPlaying: true })
   }
 
-  pause() {
-    document.getElementById("sticky-player").pause()
+  pause = async () => {
+    await this.stickyPlayer.pause()
     this.setState({ stickyPlaying: false })
   }
 
-  setSrc(url) {
-    this.setState({ src: url })
+  suspend = async () => {
+    await this.play()
+  }
+
+  setSrc = (url) => {
+    this.stickyPlayer.setAttribute('src', url)
   }
 
   render() {
-
     return (
       <div style={{ display: 'flex', minHeight: '100vh', flexDirection: 'column' }}>
         <nav>
@@ -83,7 +87,7 @@ export default class App extends Component {
             pauseAudio={this.pause}
             audioPlaying={this.state.stickyPlaying}
             setSrc={this.setSrc}
-            playingSrc={this.state.src}/>
+            playingSrc={this.stickyPlayer.src}/>
           <About path="/about"/>
           <Archive path="/archive" archive={this.state.archive}/>
           <Post path='/archive/:postId'
@@ -92,7 +96,7 @@ export default class App extends Component {
             pauseAudio={this.pause}
             audioPlaying={this.state.stickyPlaying}
             setSrc={this.setSrc}
-            playingSrc={this.state.src}/>
+            playingSrc={this.stickyPlayer.src}/>
           <Support path='/support'/>
         </Router>
         <div className="footer">
@@ -107,9 +111,9 @@ export default class App extends Component {
         </div>
         <audio id="sticky-player"
           style={{ position: 'fixed', bottom: '0', width: this.state.width }}
-          src={this.state.src}
           onPlay={this.play}
           onPause={this.pause}
+          onSuspend={this.suspend}
           controls/>
       </div>
     )

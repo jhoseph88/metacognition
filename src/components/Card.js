@@ -18,13 +18,11 @@ export default function Card(props) {
         pauseAudio={props.pauseAudio}
         playingSrc={props.playingSrc}
         setSrc={props.setSrc}/>
-      <div className="title-bottom">
-        <p className="card-body">
-          {props.post.description.substring(0, 250) + '...'}
-        </p>
-        <p className="attribution"
-          dangerouslySetInnerHTML={{__html: props.attribution}}/>
-      </div>
+      <p className="card-body">
+        {props.post.description.substring(0, 250) + '...'}
+      </p>
+      <p className="attribution"
+        dangerouslySetInnerHTML={{__html: props.attribution}}/>
     </div>
   )
 }

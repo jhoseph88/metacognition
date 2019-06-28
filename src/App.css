@@ -75,6 +75,8 @@ button {
 .card {
   margin: 0px 25px 25px 25px;
   max-width: 500px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .card-title {
@@ -96,14 +98,6 @@ button {
   border-color: lightgray;
   border-width: 0px 1px 0px 1px;
   padding: 10px;
-}
-
-.title-bottom {
-  background-color: white;
-  border-style: solid;
-  border-color: lightgray;
-  border-radius: 0px 0px 10px 10px;
-  border-width: 1px;
 }
 
 .card-body {

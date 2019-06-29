@@ -13,7 +13,7 @@ import Support from './pages/support.js'
 import Post from './components/Post.js'
 
 import './App.css'
-import { ARCHIVE_URL, ITUNES, RSS, RSS_ICON, SPOTIFY, GOOGLE_PLAY } from './Constants'
+import { ARCHIVE_URL, ITUNES, RSS, RSS_ICON, SPOTIFY, GOOGLE_PLAY, STITCHER } from './Constants'
 
 // badges
 import {
@@ -105,6 +105,7 @@ export default class App extends Component {
             <a href={ITUNES} className="footer-link"><AppleBadge/></a>
             <a href={SPOTIFY} className="footer-link"><SpotifyBadge/></a>
             <a href={GOOGLE_PLAY} className="footer-link" rel='nofollow'><img width='125px' alt='Listen on Google Play Music' src='https://play.google.com/intl/en_us/badges-music/images/badges/en_badge_web_music.png'/></a>
+            <a href={STITCHER} className="footer-link"><img width='125px' src="https://secureimg.stitcher.com/promo.assets/badges/Stitcher_Listen_Badge_Color_Light_BG.png" alt="Listen to Stitcher"/></a>
             <a href={RSS} className="footer-link">
               <img src={RSS_ICON} width="55px" height="55px" alt="RSS feed"/>
             </a>

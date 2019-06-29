@@ -56,6 +56,7 @@ button {
   background: gray;
   padding: 20px;
   display: flex;
+  flex-wrap: wrap;
 }
 
 .copyright {
@@ -64,8 +65,8 @@ button {
 
 .footer-links {
   display: flex;
-  flex-wrap: wrap;
   margin-left: auto;
+  flex-wrap: wrap;
 }
 
 .footer-link {
